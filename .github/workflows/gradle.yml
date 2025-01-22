@@ -43,5 +43,6 @@ jobs:
         host: ${{ secrets.REMOTE_HOST }}  # Replace with your remote server's IP/hostname
         username: ${{ secrets.REMOTE_USER }}
         password: ${{ secrets.REMOTE_PASSWORD }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
          echo "Connected to remote server"
