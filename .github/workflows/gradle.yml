@@ -18,7 +18,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-
+  
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
@@ -36,3 +36,12 @@ jobs:
       run: |
         docker build -t ${{ secrets.DOCKER_USERNAME }}/java-app:latest .
         docker push ${{ secrets.DOCKER_USERNAME }}/java-app:latest
+
+    - name: deployment
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}  # Replace with your remote server's IP/hostname
+        username: ${{ secrets.REMOTE_USER }}
+        password: ${{ secrets.REMOTE_PASSWORD }}
+        script: |
+         echo "Connected to remote server"
