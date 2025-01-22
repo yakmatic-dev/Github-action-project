@@ -46,7 +46,8 @@ jobs:
       # Step 3: SSH into the Red Hat server and deploy the application
     - name: Deploy to Red Hat Server
       run: |
-        ssh -o StrictHostKeyChecking=no yakmat@172.20.10.3 << 'EOF'
+        ssh -o StrictHostKeyChecking=no -o ConnectTimeout=60 yakmat@172.20.10.3 << 'EOF'
+
             echo "Connected to Red Hat server"
 
             
