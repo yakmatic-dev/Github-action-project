@@ -37,14 +37,18 @@ jobs:
         docker build -t ${{ secrets.DOCKER_USERNAME }}/java-app:latest .
         docker push ${{ secrets.DOCKER_USERNAME }}/java-app:latest
 
-    - name: deployment
-      uses: appleboy/ssh-action@master
+     
+    - name: Set up SSH Key
+      uses: webfactory/ssh-agent@v0.5.3
       with:
-        host: ${{ secrets.REMOTE_HOST }}  # Replace with your remote server's IP/hostname
-        username: ${{ secrets.REMOTE_USER }}
-        password: ${{ secrets.REMOTE_PASSWORD }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        timeout: 80s
-        command_timeout: 30m
-        script: |
-         echo "Connected to remote server"
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # Step 3: SSH into the Red Hat server and deploy the application
+    - name: Deploy to Red Hat Server
+      run: |
+        ssh -o StrictHostKeyChecking=no yakmat@172.20.10.3 << 'EOF'
+            echo "Connected to Red Hat server"
+
+            
+          EOF
+
