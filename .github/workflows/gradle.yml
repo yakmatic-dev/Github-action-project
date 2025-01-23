@@ -43,13 +43,18 @@ jobs:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: SSH to remote server
-      uses: appleboy/ssh-action@master
+      uses: appleboy/ssh-action@0.1.10
       with:
        host: ${{ secrets.REMOTE_HOST }}
        username: ${{ secrets.REMOTE_USER }}
        password: ${{ secrets.REMOTE_PASSWORD }}
        port: 22
+       timeout: 120s
        script: |
-         echo "Successfully connected to remote servers"
+         echo "Successfully connected to remote server"
+         
+    - name: Check Host Reachability
+      run: ping -c 4 172.20.10.3
+
 
 
