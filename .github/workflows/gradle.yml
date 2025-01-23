@@ -49,7 +49,14 @@ jobs:
        username: ${{ secrets.REMOTE_USER }}
        password: ${{ secrets.REMOTE_PASSWORD }}
        port: 22
+       timeout: 120s
        script: |
          echo "Successfully connected to remote server"
+    - name: Test SSH Connectivity
+      run: |
+       echo "Pinging server..."
+       ping -c 4 ${{ secrets.REMOTE_HOST }}
+       echo "Checking port 22..."
+       nc -zv ${{ secrets.REMOTE_HOST }} 22
 
 
