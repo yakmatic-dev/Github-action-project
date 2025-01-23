@@ -44,11 +44,14 @@ jobs:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       # Step 3: SSH into the Red Hat server and deploy the application
-    - name: Deploy to Red Hat Server
+    - name: SSH to remote server
       uses: appleboy/ssh-action@master
       with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            echo "conected sucessully"
+       host: ${{ secrets.HOST }}
+       username: ${{ secrets.REMOTE_USER }}
+       password: ${{ secrets.REMOTE_PASSWORD }}
+       port: 22
+       timeout: 120s  # Increase timeout duration
+       script: |
+         echo "Connected to remote server"
+
