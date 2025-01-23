@@ -18,7 +18,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-
+  
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
@@ -36,3 +36,22 @@ jobs:
       run: |
         docker build -t ${{ secrets.DOCKER_USERNAME }}/java-app:latest .
         docker push ${{ secrets.DOCKER_USERNAME }}/java-app:latest
+
+     
+    - name: Set up SSH Key
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # Step 3: SSH into the Red Hat server and deploy the application
+    - name: SSH to remote server
+      uses: appleboy/ssh-action@master
+      with:
+       host: ${{ secrets.HOST }}
+       username: ${{ secrets.REMOTE_USER }}
+       password: ${{ secrets.REMOTE_PASSWORD }}
+       port: 22
+       timeout: 120s  # Increase timeout duration
+       script: |
+         echo "Connected to remote server"
+
